@@ -141,12 +141,22 @@ REMOTE_STORE_FORWARD_HEADERS = ["x-org-id"] # An iterable of HTTP header names
 # there's significant latency between this server and the backends.
 REMOTE_PREFETCH_DATA = True
 
-STORAGE_FINDERS = ()
+STORAGE_FINDERS = (
+    'graphite.finders.remote.RemoteFinder',
+)
 
 STATSD_HOST = os.environ.get('GRAPHITE_STATSD_HOST', '')
 if STATSD_HOST != '':
-	from graphite.app_settings import *
-	MIDDLEWARE_CLASSES = (
+    from graphite.app_settings import *
+    MIDDLEWARE = (
         'django_statsd.middleware.GraphiteRequestTimingMiddleware',
         'django_statsd.middleware.GraphiteMiddleware',
-        ) + MIDDLEWARE_CLASSES
+        ) + MIDDLEWARE
+
+    try:
+        MIDDLEWARE_CLASSES
+    except NameError:
+    	pass
+    else:
+        MIDDLEWARE_CLASSES = MIDDLEWARE
+

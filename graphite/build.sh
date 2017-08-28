@@ -20,7 +20,7 @@ virtualenv /opt/graphite
 #/opt/graphite/bin/pip install --no-binary=:all: https://github.com/graphite-project/whisper/tarball/${VERSION}
 /opt/graphite/bin/pip install blist
 /opt/graphite/bin/pip install scandir
-/opt/graphite/bin/pip install django-statsd-mozilla
+/opt/graphite/bin/pip install --no-binary=:all: https://github.com/django-statsd/django-statsd/tarball/master
 
 cp /opt/graphite/conf/graphite.wsgi.example /opt/graphite/conf/graphite.wsgi
 
