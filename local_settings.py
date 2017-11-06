@@ -85,6 +85,14 @@ INDEX_FILE = '/opt/graphite/storage/index'     # Search index file
 # used.
 CLUSTER_SERVERS = [ host.strip() for host in os.environ.get('GRAPHITE_CLUSTER_SERVERS', "localhost:6060").split(",") ]
 
+TAGDB = os.environ.get('GRAPHITE_TAGDB', '')
+TAGDB_CACHE_DURATION = int(os.environ.get('GRAPHITE_TAGDB_CACHE_DURATION', 60))
+TAGDB_AUTOCOMPLETE_LIMIT = int(os.environ.get('GRAPHITE_TAGDB_AUTOCOMPLETE_LIMIT', 100))
+
+TAGDB_HTTP_URL = os.environ.get('GRAPHITE_TAGDB_HTTP_URL', '')
+TAGDB_HTTP_USER = os.environ.get('GRAPHITE_TAGDB_HTTP_USER', '')
+TAGDB_HTTP_PASSWORD = os.environ.get('GRAPHITE_TAGDB_HTTP_PASSWORD', '')
+TAGDB_HTTP_AUTOCOMPLETE = os.environ.get('GRAPHITE_TAGDB_HTTP_AUTOCOMPLETE', 'false').lower() in ['1','true','yes']
 
 # Creates a pool of worker threads to which tasks can be dispatched. This makes
 # sense if there are multiple CLUSTER_SERVERS because then the communication
