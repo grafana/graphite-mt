@@ -86,8 +86,8 @@ INDEX_FILE = '/opt/graphite/storage/index'     # Search index file
 CLUSTER_SERVERS = [ host.strip() for host in os.environ.get('GRAPHITE_CLUSTER_SERVERS', "localhost:6060").split(",") ]
 
 TAGDB = os.environ.get('GRAPHITE_TAGDB', '')
-TAGDB_CACHE_DURATION = int(os.environ.get('GRAPHITE_TAGDB_CACHE_DURATION', False) or 60)
-TAGDB_AUTOCOMPLETE_LIMIT = int(os.environ.get('GRAPHITE_TAGDB_AUTOCOMPLETE_LIMIT', False) or 100)
+TAGDB_CACHE_DURATION = int(os.environ.get('GRAPHITE_TAGDB_CACHE_DURATION') or 60)
+TAGDB_AUTOCOMPLETE_LIMIT = int(os.environ.get('GRAPHITE_TAGDB_AUTOCOMPLETE_LIMIT') or 100)
 
 TAGDB_HTTP_URL = os.environ.get('GRAPHITE_TAGDB_HTTP_URL', '')
 TAGDB_HTTP_USER = os.environ.get('GRAPHITE_TAGDB_HTTP_USER', '')
