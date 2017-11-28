@@ -26,6 +26,8 @@ Additional environment variables can be set to adjust performance.
 * WSGI_REQUEST_TIMEOUT: (65) maximum number of seconds that a request is allowed to run before the daemon process is restarted
 * WSGI_MEMORY_LIMIT: (10737418240 aka 10Gi) maximum amount of memory a daemon process can use (on platforms that support it)
 * WSGI_VIRTUAL_MEMORY_LIMIT: (10737418240 aka 10Gi) maximum amount of virtual memory a daemon process can use (on platforms that support it)
+* WSGI_MAX_REQUESTS: (1000) limit on the number of requests a daemon process should process before it is shutdown and restarted.
+* WSGI_REQUEST_TIMEOUT: (120) the maximum number of seconds that a request is allowed to run before the daemon process is restarted.
 
 ### Graphite-web
 * GRAPHITE_SECRET_KEY: (UNSAFE_DEFAULT)  Set this to a long, random unique string to use as a secret key for this install
