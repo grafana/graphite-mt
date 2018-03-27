@@ -16,8 +16,11 @@ docker run -p 80:80 -e GRAPHITE_CLUSTER_SERVERS=metrictank:6060 raintank/graphit
 Additional environment variables can be set to adjust performance.
 
 ### metrictank
-* SINGLE_TENANT: if set will configure the graphite installation to pass  "x-org-id: 1" header to metrictank. If not set, metrictank must be configured with multi_tenant=false
-  or all requests to graphite must include a "x-org-id" header with a valid orgId.
+* SINGLE_TENANT: 
+  - if set to a number, will configure the graphite installation to pass that x-org-id to metrictank.
+  - if set to a any non-empty string, will configure the graphite installation to pass  "x-org-id: 1" header to metrictank.
+  - if not set, all requests to graphite must include a "x-org-id" header with a valid orgId or metrictank must be configured with multi_tenant=false
+    otherwise authentication will fail.
 
 ### MOD_WSGI
 * WSGI_PROCESSES: (2) the number of WSGI daemon processes that should be started

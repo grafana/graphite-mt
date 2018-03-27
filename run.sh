@@ -19,7 +19,12 @@ export GRAPHITE_WSGI_VIRTUAL_MEMORY_LIMIT=${GRAPHITE_WSGI_VIRTUAL_MEMORY_LIMIT:-
 export GRAPHITE_WSGI_MAX_REQUESTS=${GRAPHITE_WSGI_MAX_REQUESTS:-1000}
 
 ARGS="-DFOREGROUND"
-if [ ! -z "$SINGLE_TENANT" ]; then
+
+if [ -n "$SINGLE_TENANT" ]; then
+
+	# legacy values like "yes", "TRUE" set to 1
+	[[ $SINGLE_TENANT =~ ^[0-9]+$ ]] || export SINGLE_TENANT=1
+
 	ARGS="$ARGS -DSingleTenant"
 fi
 
