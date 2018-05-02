@@ -11,7 +11,7 @@ clean:
 build: build-graphite
 	docker build -t ${PROJECT}/${APP}:${VERSION} .
 
-build-graphite:
+build-graphite: clean
 	docker run --rm -v $(shell pwd)/build-graphite:/opt/graphite -v $(shell pwd)/graphite:/opt/build -e VERSION=${VERSION} ubuntu:xenial /opt/build/build.sh
 
 push: build
