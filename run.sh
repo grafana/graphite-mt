@@ -1,12 +1,12 @@
 #!/bin/bash
 
+set -o notify
+set -o errexit
+set -o verbose
+set -o xtrace
 
-
-#initialize django
-PYTHONPATH=/opt/graphite/webapp /opt/graphite/bin/django-admin.py collectstatic --noinput --settings=graphite.settings
-PYTHONPATH=/opt/graphite/webapp /opt/graphite/bin/django-admin.py migrate --settings=graphite.settings --run-syncd
-chown -R www-data:www-data /opt/graphite/storage
-
+# start graphite-web proxy
+graphite-web-proxy -addr 127.0.0.1:8181 -logtostderr -tsdb-url $TSDB_URL -api-key $TSDB_KEY &
 
 # start apache
 . /etc/apache2/envvars

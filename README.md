@@ -1,15 +1,28 @@
 # Graphite-mt
 
-Graphite-mt provides a [graphite](https://graphiteapp.org/) installation tailored for running with a [metrictank](https://github.com/raintank/metrictank) backend.
+Graphite-web provides a [graphite](https://graphiteapp.org/) UI installation tailored for running with a [metrictank](https://github.com/raintank/metrictank) backend such as hosted Grafana from GrafanaLabs.
 
 When run, the container will expose graphite via HTTP on port 80.
 
+## Building
 
-## running the image
-For correct operation, the GRAPHITE_CLUSTER_SERVERS environment variable must be set with the host:port of the metrictank server (or LB address if running a cluster)
+To build the image simply checkout this repo
+```
+git clone https://github.com/sovrn/graphite-web.git
+```
+Then `cd` into the directory and run
+```
+docker build --force-rm --compress -t graphite-web ./
+```
+
+## Running the image
+This image includes [graphite-web-proxy](https://github.com/raintank/graphite-web-proxy), and requires the following variables:
+
+ - `TSDB_KEY` = Your Metrictank API key
+ - `TSDB_URL` = Your Metrictank hosted metrics URL
 
 ```
-docker run -p 80:80 -e GRAPHITE_CLUSTER_SERVERS=metrictank:6060 raintank/graphite-mt
+docker run -dp 80:80 -e TSDB_KEY=API_KEY -e TSDB_URL=TSDB_URL --name graphite-web graphite-web
 ```
 
 ## Tunables
@@ -51,15 +64,3 @@ Additional environment variables can be set to adjust performance.
 * GRAPHITE_MAX_FETCH_RETRIES: (2) Number of retries for a specific remote data fetch
 * GRAPHITE_FIND_CACHE_DURATION: (0) Time to cache remote metric find results
 * GRAPHITE_STATSD_HOST: ("") If set, django_statsd.middleware.GraphiteRequestTimingMiddleware and django_statsd.middleware.GraphiteMiddleware will be enabled.
-
-## Building
-
-To build the image simply checkout this repo
-```
-git clone https://github.com/raintank/graphite-mt.git
-```
-Then `cd` into the directory and run
-```
-make build VERSION=1.0.2
-```
-
