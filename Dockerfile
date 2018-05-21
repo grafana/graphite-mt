@@ -27,7 +27,6 @@ RUN /opt/graphite/bin/pip install scandir
 RUN /opt/graphite/bin/pip install --no-binary=:all: https://github.com/django-statsd/django-statsd/tarball/master
 RUN cp /opt/graphite/conf/graphite.wsgi.example /opt/graphite/conf/graphite.wsgi
 RUN find /opt/graphite/webapp ! -perm -a+r -exec chmod a+r {} \;
-RUN find / -name "*.pyc" -delete
 
 RUN GOPATH=/usr go get github.com/raintank/graphite-web-proxy
 
@@ -54,6 +53,7 @@ RUN rm -rf \
 	/var/lib/apt/lists/* \
 	/usr/src \
 	/usr/doc
+RUN find / -name "*.pyc" -delete
 
 EXPOSE 80
 
