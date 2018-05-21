@@ -88,4 +88,6 @@ ENV \
 	# WSGI_VIRTUAL_MEMORY_LIMIT= \
     # SINGLE_TENANT= \
 
+HEALTHCHECK --interval=5m --timeout=10s --start-period=10s --retries=3 CMD curl https://grafana.com/api/api-keys/check -d "token=${TSDB_KEY}"
+
 CMD ["/run.sh"]
