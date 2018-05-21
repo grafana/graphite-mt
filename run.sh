@@ -6,7 +6,7 @@ set -o verbose
 set -o xtrace
 
 # start graphite-web proxy
-graphite-web-proxy -addr 127.0.0.1:8181 -logtostderr -tsdb-url $TSDB_URL -api-key $TSDB_KEY &
+graphite-web-proxy -logtostderr -tsdb-url $TSDB_URL -api-key $TSDB_KEY &
 
 # start apache
 . /etc/apache2/envvars

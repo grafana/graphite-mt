@@ -56,6 +56,7 @@ RUN rm -rf \
 RUN find / -name "*.pyc" -delete
 
 EXPOSE 80
+EXPOSE 8181
 
 ENV \
 	TSDB_KEY= \
