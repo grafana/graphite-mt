@@ -1,0 +1,7 @@
+:80 {
+    root /opt/graphite/webapp
+    proxy / localhost:8080 {
+        transparent
+        except /static
+    }
+}
