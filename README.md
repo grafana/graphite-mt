@@ -36,16 +36,9 @@ Additional environment variables can be set to adjust performance.
   - if set to a any non-empty string, will configure the Graphite installation to pass  `"x-org-id: 1"` header to metrictank.
   - if not set, all requests to Graphite must include a `"x-org-id"` header with a valid orgId or metrictank must be configured with `multi_tenant=false` otherwise authentication will fail.
 
-### MOD_WSGI
+### Gunicorn
 
-- `WSGI_INACTIVITY_TIMEOUT`: (120) the maximum number of seconds allowed to pass before the daemon process is shutdown and restarted when the daemon process has entered an idle state
-- `WSGI_MAX_REQUESTS`: (1000) limit on the number of requests a daemon process should process before it is shutdown and restarted.
-- `WSGI_MEMORY_LIMIT`: (10737418240 aka 10Gi) maximum amount of memory a daemon process can use (on platforms that support it)
-- `WSGI_PROCESSES`: (2) the number of WSGI daemon processes that should be started
-- `WSGI_REQUEST_TIMEOUT`: (120) the maximum number of seconds that a request is allowed to run before the daemon process is restarted.
-- `WSGI_REQUEST_TIMEOUT`: (65) maximum number of seconds that a request is allowed to run before the daemon process is restarted
-- `WSGI_THREADS`: (2) the number of threads to be created to handle requests in each daemon process
-- `WSGI_VIRTUAL_MEMORY_LIMIT`: (10737418240 aka 10Gi) maximum amount of virtual memory a daemon process can use (on platforms that support it)
+- `GUNICORN_WORKERS`: (4) Sets the number of workers that Gunicorn will spawn
 
 ### Graphite-web
 
