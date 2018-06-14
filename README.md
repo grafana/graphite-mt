@@ -40,6 +40,10 @@ Additional environment variables can be set to adjust performance.
 * GRAPHITE_LOG_ROTATION_COUNT: (1) number of logs to keep
 * GRAPHITE_LOG_RENDERING_PERFORMANCE: (true) log performance information
 * GRAPHITE_LOG_CACHE_PERFORMANCE: (true) log cache performance information
+* GRAPHITE_LOG_FILE_INFO: (info.log), set to "-" for stdout/stderr
+* GRAPHITE_LOG_FILE_EXCEPTION: (exception.log), set to "-" for stdout/stderr
+* GRAPHITE_LOG_FILE_CACHE: (cache.log), set to "-" for stdout/stderr
+* GRAPHITE_LOG_FILE_RENDERING: (rendering.log), set to "-" for stdout/stderr
 * GRAPHITE_DEBUG: (false) Enable full debug page display on exceptions (Internal Server Error pages)
 * GRAPHITE_DEFAULT_CACHE_DURATION: (0) Duration to cache metric data and graphs
 * GRAPHITE_USE_WORKER_POOL: (true) Creates a pool of worker threads to which tasks can be dispatched
