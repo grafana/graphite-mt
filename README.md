@@ -51,7 +51,6 @@ Additional environment variables can be set to adjust performance.
 * GRAPHITE_POOL_WORKERS: (1) A baseline number of workers that should always be created
 * GRAPHITE_REMOTE_FIND_TIMEOUT: (30) Timeout for metric find requests
 * GRAPHITE_REMOTE_FETCH_TIMEOUT: (60) Timeout to fetch series data
-* GRAPHITE_REMOTE_RETRY_DELAY: (10) Time before retrying a failed remote webapp
 * GRAPHITE_MAX_FETCH_RETRIES: (2) Number of retries for a specific remote data fetch
 * GRAPHITE_FIND_CACHE_DURATION: (0) Time to cache remote metric find results
 * GRAPHITE_STATSD_HOST: ("") If set, django_statsd.middleware.GraphiteRequestTimingMiddleware and django_statsd.middleware.GraphiteMiddleware will be enabled.
