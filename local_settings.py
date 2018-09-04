@@ -121,7 +121,7 @@ POOL_WORKERS = int(os.environ.get('GRAPHITE_POOL_WORKERS', '1'))
 # These are timeout values (in seconds) for requests to remote webapps
 REMOTE_FIND_TIMEOUT = float(os.environ.get('GRAPHITE_REMOTE_FIND_TIMEOUT', '30'))           # Timeout for metric find requests
 REMOTE_FETCH_TIMEOUT = float(os.environ.get('GRAPHITE_REMOTE_FETCH_TIMEOUT', '60'))          # Timeout to fetch series data
-REMOTE_RETRY_DELAY = float(os.environ.get('GRAPHITE_REMOTE_RETRY_DELAY', '0'))           # Time before retrying a failed remote webapp
+REMOTE_RETRY_DELAY = float(0)          # Time before retrying a failed remote webapp. should stay 0 so we always retry metrictank because it is authorative. see https://github.com/raintank/graphite-mt/pull/11
 
 # Try to detect when a cluster server is localhost and don't forward queries
 REMOTE_EXCLUDE_LOCAL = False
