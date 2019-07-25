@@ -1,4 +1,4 @@
-VERSION=1.1.4
+VERSION=1.1.5
 PROJECT=raintank
 APP=graphite-mt
 TAG_LATEST=0

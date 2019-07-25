@@ -145,7 +145,7 @@ REMOTE_STORE_MERGE_RESULTS = True
 
 # Provide a list of HTTP headers that you want forwarded on from this host
 # when making a request to a remote webapp server in CLUSTER_SERVERS
-REMOTE_STORE_FORWARD_HEADERS = ["x-org-id"] # An iterable of HTTP header names
+REMOTE_STORE_FORWARD_HEADERS = ["x-org-id", "jaeger-debug-id", "jaeger-baggage", "uber-trace-id"] # An iterable of HTTP header names
 
 ## Prefetch cache
 # set to True to fetch all metrics using a single http request per remote server
