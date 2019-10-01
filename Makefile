@@ -1,8 +1,8 @@
 # VERSION is using this naming scheme: <our version>-<graphite version>
 #
-# our version:      a number to identify the graphite-mt image, it should be increased every time anything
-#                   in this repo gets modified
-# graphite version: the version of the graphite image that's used. preferrably the tag if there is one, 
+# our version:      a number to identify the graphite-mt image, it should be increased
+#                   every time anything in this repo gets modified
+# graphite version: the version of graphite that's used. preferrably the tag if there is one,
 #                   otherwise the commit hash
 #
 VERSION=1-ge4ccaa21
