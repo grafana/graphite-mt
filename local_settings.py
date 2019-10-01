@@ -94,6 +94,8 @@ TAGDB_HTTP_USER = os.environ.get('GRAPHITE_TAGDB_HTTP_USER', '')
 TAGDB_HTTP_PASSWORD = os.environ.get('GRAPHITE_TAGDB_HTTP_PASSWORD', '')
 TAGDB_HTTP_AUTOCOMPLETE = os.environ.get('GRAPHITE_TAGDB_HTTP_AUTOCOMPLETE', 'false').lower() in ['1','true','yes']
 
+ENFORCE_INPUT_VALIDATION = os.environ.get('GRAPHITE_ENFORCE_INPUT_VALIDATION', 'false').lower() in ['1','true','yes']
+
 # Creates a pool of worker threads to which tasks can be dispatched. This makes
 # sense if there are multiple CLUSTER_SERVERS because then the communication
 # with them can be parallelized
