@@ -1,4 +1,6 @@
-VERSION=1.1.5-ge4ccaa21
+IMAGE_VERSION=1
+GRAPHITE_VERSION=e4ccaa21
+VERSION=${IMAGE_VERSION}-${GRAPHITE_VERSION}
 PROJECT=raintank
 APP=graphite-mt
 TAG_LATEST=0
@@ -12,7 +14,7 @@ build: build-graphite
 	docker build -t ${PROJECT}/${APP}:${VERSION} .
 
 build-graphite:
-	docker run --rm -v $(shell pwd)/build-graphite:/opt/graphite -v $(shell pwd)/graphite:/opt/build -e VERSION=e4ccaa2104499bcc8a39a5479b57a4af898bf9a4 ubuntu:xenial /opt/build/build.sh
+	docker run --rm -v $(shell pwd)/build-graphite:/opt/graphite -v $(shell pwd)/graphite:/opt/build -e VERSION=${GRAPHITE_VERSION} ubuntu:xenial /opt/build/build.sh
 
 push: build
 	docker push ${PROJECT}/${APP}:${VERSION}
