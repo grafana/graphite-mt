@@ -4,6 +4,7 @@ set -x
 apt-get update
 apt-get -y install build-essential libffi-dev libcairo2-dev git wget python2.7 python-pip apache2
 
+pip install --upgrade pip; pip install zipp
 pip install --upgrade virtualenv virtualenv-tools
 
 rm -rf /opt/graphite/*
