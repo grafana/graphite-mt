@@ -177,3 +177,15 @@ if STATSD_HOST != '':
         pass
     else:
         MIDDLEWARE_CLASSES = MIDDLEWARE
+
+
+STATSD_METRIC_NAME_OVERRIDES = {
+    '/render': {
+        'module': 'graphite.render.views',
+        'name': 'renderView',
+    },
+    '/metrics/find': {
+        'module': 'graphite.metrics.views',
+        'name': 'find_view',
+    }
+}
