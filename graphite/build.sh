@@ -19,7 +19,7 @@ virtualenv /opt/graphite
 /opt/graphite/bin/pip install --no-binary=:all: https://github.com/graphite-project/graphite-web/tarball/${VERSION}
 /opt/graphite/bin/pip install blist
 /opt/graphite/bin/pip install scandir
-/opt/graphite/bin/pip install --no-binary=:all: https://github.com/grafana/django-statsd/tarball/allow_overrides_for_metric_names_by_request_path
+/opt/graphite/bin/pip install --no-binary=:all: https://github.com/grafana/django-statsd/tarball/master
 
 cp /opt/graphite/conf/graphite.wsgi.example /opt/graphite/conf/graphite.wsgi
 
