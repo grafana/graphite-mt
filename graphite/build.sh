@@ -16,7 +16,7 @@ if [ $VERSION == "latest" ]; then
 fi
 
 virtualenv /opt/graphite
-/opt/graphite/bin/pip install --no-binary=:all: https://github.com/graphite-project/graphite-web/tarball/${VERSION}
+/opt/graphite/bin/pip install --no-binary=:all: https://github.com/grafana/graphite-web/tarball/${VERSION}
 /opt/graphite/bin/pip install blist
 /opt/graphite/bin/pip install scandir
 /opt/graphite/bin/pip install --no-binary=:all: https://github.com/grafana/django-statsd/tarball/master
