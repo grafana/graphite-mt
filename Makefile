@@ -10,7 +10,7 @@ all: build
 clean:
 	docker run --rm -v $(shell pwd)/:/opt/graphite ubuntu:xenial rm -rf /opt/graphite/build-graphite
 
-build: build-graphite
+build: clean build-graphite
 	docker build -t ${PROJECT}/${APP}:${VERSION} .
 
 build-graphite:
@@ -23,4 +23,4 @@ ifeq ($(TAG_LATEST), 1)
 	docker push ${PROJECT}/${APP}:latest
 endif
 
-.PHONY: all build push
+.PHONY: all

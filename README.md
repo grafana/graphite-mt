@@ -63,7 +63,7 @@ git clone https://github.com/raintank/graphite-mt.git
 ```
 Then `cd` into the directory and run
 ```
-make build
+make
 ```
 
 ## Versioning
