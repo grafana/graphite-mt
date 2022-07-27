@@ -1,1 +1,3 @@
 build-graphite/
+.commit_sha
+.docker_tag
