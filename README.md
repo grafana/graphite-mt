@@ -57,23 +57,15 @@ Additional environment variables can be set to adjust performance.
 
 ## Building
 
-To build the image simply checkout this repo
+To build the image, run:
 ```
-git clone https://github.com/raintank/graphite-mt.git
-```
-Then `cd` into the directory and run
-```
-make
+make build
 ```
 
-## Versioning
+## Pushing
 
-We're using this naming scheme: `graphite-mt:<our version>-<graphite version>`
+To push the image to GCR:
+```
+make push
+```
 
-`our version`:      a number to identify the graphite-mt image, it should be increased
-                    every time anything in this repo gets modified
-`graphite version`: the version of graphite that's used. preferrably the tag if there is one,
-                    otherwise the commit hash
-
-These two version numbers get defined in the `Makefile`.
-Valid image versions are for example: `1-1.1.5`, `2-e4ccaa21`, `3-e4ccaa21`
