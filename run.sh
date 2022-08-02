@@ -1,12 +1,9 @@
 #!/bin/bash
 
-
-
-#initialize django
+# initialize django
 PYTHONPATH=/opt/graphite/webapp /opt/graphite/bin/django-admin.py collectstatic --noinput --settings=graphite.settings
 PYTHONPATH=/opt/graphite/webapp /opt/graphite/bin/django-admin.py migrate --settings=graphite.settings --run-syncd
 chown -R www-data:www-data /opt/graphite/storage
-
 
 # start apache
 . /etc/apache2/envvars
@@ -21,7 +18,6 @@ export GRAPHITE_WSGI_MAX_REQUESTS=${GRAPHITE_WSGI_MAX_REQUESTS:-1000}
 ARGS="-DFOREGROUND"
 
 if [ -n "$SINGLE_TENANT" ]; then
-
 	# legacy values like "yes", "TRUE" set to 1
 	[[ $SINGLE_TENANT =~ ^[0-9]+$ ]] || export SINGLE_TENANT=1
 
