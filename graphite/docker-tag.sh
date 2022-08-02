@@ -1,5 +1,5 @@
 #!/bin/bash
-set -x
+set -eufo pipefail
 
 # This script generates two files:
 #   - .commit_sha
