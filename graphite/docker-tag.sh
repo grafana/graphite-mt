@@ -6,7 +6,7 @@ set -eufo pipefail
 #   - .docker_tag
 #
 # By default, this script grabs the full commit sha of the HEAD of master of the
-# grafana/graphite-web repo. That value is dropped into `.commit_sha`. It then
+# graphite-project/graphite-web repo. That value is dropped into `.commit_sha`. It then
 # generates a docker tag from that full commit sha and drops that value into
 # `.docker_tag`.
 
@@ -18,9 +18,9 @@ else
   command -v date >/dev/null 2>&1 || { echo "date is not installed"; exit 1; }
 fi
 
-# Grab grafana/graphite-web repo
+# Grab graphite-project/graphite-web repo
 TMPFILE=$(mktemp -d)
-git clone https://github.com/grafana/graphite-web.git $TMPFILE
+git clone https://github.com/graphite-project/graphite-web.git $TMPFILE
 
 # Jump into the cloned repo
 pushd $TMPFILE

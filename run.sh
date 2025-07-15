@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # initialize django
-PYTHONPATH=/opt/graphite/webapp /opt/graphite/bin/django-admin.py collectstatic --noinput --settings=graphite.settings
-PYTHONPATH=/opt/graphite/webapp /opt/graphite/bin/django-admin.py migrate --settings=graphite.settings --run-syncd
+PYTHONPATH=/opt/graphite/webapp /opt/graphite/bin/django-admin collectstatic --noinput --settings=graphite.settings
+PYTHONPATH=/opt/graphite/webapp /opt/graphite/bin/django-admin migrate --settings=graphite.settings --run-syncdb
 chown -R www-data:www-data /opt/graphite/storage
 
 # start apache
