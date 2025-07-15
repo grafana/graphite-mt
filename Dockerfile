@@ -28,8 +28,10 @@ FROM ubuntu:focal
 ENV DEBIAN_FRONTEND=noninteractive
 ENV TZ=UTC
 
-RUN apt-get update && apt-get -y install python3 apache2 libapache2-mod-wsgi-py3 curl libcairo2 libffi7 \
-  && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && \
+    apt-get install -y --only-upgrade libc-bin libc6 && \
+    apt-get -y install python3 apache2 libapache2-mod-wsgi-py3 curl libcairo2 libffi7 && \
+    rm -rf /var/lib/apt/lists/*
 
 COPY --from=build /opt/graphite /opt/graphite
 COPY run.sh /run.sh
