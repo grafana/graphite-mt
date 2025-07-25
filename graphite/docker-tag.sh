@@ -37,11 +37,15 @@ else
   ISO_TIMESTAMP=$(date -u --rfc-3339=seconds "-d@${UNIX_TIMESTAMP}" | sed "s/+.*$//g" | sed "s/[^0-9]*//g")
 fi
 
-# Generate docker tag
-DOCKER_TAG=$(echo "${ISO_TIMESTAMP}-master-${GIT_COMMIT_SHORT}" | tr "/" "_")
-
 # Jump back out
 popd
+
+# Get current repo commit SHA
+GRAPHITE_MT_SHA=$(git rev-parse HEAD | tr -d '\n')
+GRAPHITE_MT_SHORT="$(git rev-parse --short "$GRAPHITE_MT_SHA")"
+
+# Generate docker tag with both SHAs
+DOCKER_TAG=$(echo "${ISO_TIMESTAMP}-${GIT_COMMIT_SHORT}-${GRAPHITE_MT_SHORT}" | tr "/" "_")
 
 # Generate output files
 echo $COMMIT_SHA > .commit_sha
