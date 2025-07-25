@@ -3,25 +3,24 @@ FROM ubuntu:focal AS build
 ENV DEBIAN_FRONTEND=noninteractive
 ENV TZ=UTC
 
-RUN apt-get update && apt-get -y install build-essential libffi-dev libcairo2-dev git wget python3 python3-pip apache2 curl
+RUN apt-get update && apt-get -y install build-essential libffi-dev libcairo2-dev git wget python3.9 python3.9-dev python3-pip apache2 curl
 
-RUN python3 -m pip install --upgrade pip
+RUN python3.9 -m pip install --upgrade pip
 
-RUN python3 -m pip install zipp \
-  && python3 -m pip install --upgrade virtualenv virtualenv-tools
+RUN python3.9 -m pip install zipp \
+  && python3.9 -m pip install --upgrade virtualenv virtualenv-tools
 
 WORKDIR /opt/graphite
 COPY .commit_sha .commit_sha
 
-RUN python3 -m virtualenv /opt/graphite \
+RUN python3.9 -m virtualenv /opt/graphite \
   && /opt/graphite/bin/pip install https://github.com/graphite-project//graphite-web/tarball/$(cat .commit_sha) \
   && /opt/graphite/bin/pip install pycairo \
   && /opt/graphite/bin/pip install https://github.com/grafana/django-statsd/tarball/master \
-  && cp -r /opt/graphite/lib/python3.8/site-packages/opt/graphite/webapp/* /opt/graphite/webapp/ \
+  && cp -r /opt/graphite/lib/python3.9/site-packages/opt/graphite/webapp/* /opt/graphite/webapp/ \
   && cp /opt/graphite/conf/graphite.wsgi.example /opt/graphite/conf/graphite.wsgi \
   && find /opt/graphite/webapp ! -perm -a+r -exec chmod a+r {} \; \
   && mkdir -p /opt/graphite/storage /opt/graphite/storage/log/webapp
-
 
 FROM ubuntu:focal
 
@@ -30,8 +29,10 @@ ENV TZ=UTC
 
 RUN apt-get update && \
     apt-get install -y --only-upgrade libc-bin libc6 && \
-    apt-get -y install python3 apache2 libapache2-mod-wsgi-py3 curl libcairo2 libffi7 && \
-    rm -rf /var/lib/apt/lists/*
+    apt-get -y install python3.9 apache2 libapache2-mod-wsgi-py3 curl libcairo2 libffi7 && \
+    rm -rf /var/lib/apt/lists/* && \
+    # we don't need the snakeoil certs in our setup, and they are flagged as insecure
+    rm -rf /etc/ssl/private/ssl-cert-snakeoil.* 
 
 COPY --from=build /opt/graphite /opt/graphite
 COPY run.sh /run.sh
