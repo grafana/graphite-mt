@@ -27,7 +27,7 @@ pushd $TMPFILE
 
 # Grab full and short commit shas
 COMMIT_SHA=$(git rev-parse HEAD | tr -d '\n')
-GIT_COMMIT_SHORT="$(git rev-parse --short "$COMMIT_SHA")"
+GRAPHITE_WEB_COMMIT_SHORT="$(git rev-parse --short "$COMMIT_SHA")"
 
 # Grab timestamp of commit
 UNIX_TIMESTAMP=$(git show -s --format=%ct "$COMMIT_SHA")
@@ -42,10 +42,12 @@ popd
 
 # Get current repo commit SHA
 GRAPHITE_MT_SHA=$(git rev-parse HEAD | tr -d '\n')
+GRAPHITE_MT_BRANCH=$(git branch --show-current)
 GRAPHITE_MT_SHORT="$(git rev-parse --short "$GRAPHITE_MT_SHA")"
 
+WORKING_SUFFIX=$(if [ -n "$(git status --porcelain --untracked-files=no)" ]; then echo "-WIP"; else echo ""; fi)
 # Generate docker tag with both SHAs
-DOCKER_TAG=$(echo "${ISO_TIMESTAMP}-${GIT_COMMIT_SHORT}-${GRAPHITE_MT_SHORT}" | tr "/" "_")
+DOCKER_TAG=$(echo "${ISO_TIMESTAMP}-${GRAPHITE_WEB_COMMIT_SHORT}-${GRAPHITE_MT_BRANCH}-${GRAPHITE_MT_SHORT}${WORKING_SUFFIX}" | tr "/" "_")
 
 # Generate output files
 echo $COMMIT_SHA > .commit_sha
