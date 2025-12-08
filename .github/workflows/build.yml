@@ -1,0 +1,41 @@
+name: "build"
+
+on:
+  push:
+    branches:
+      - master
+      - main
+  pull_request:
+
+env:
+  PROD_REGISTRY: "us-docker.pkg.dev/grafanalabs-global/docker-graphite-mt-prod"
+
+jobs:
+  build-push:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Generate docker tag and commit SHA
+        run: |
+          bash ./graphite/docker-tag.sh
+          DOCKER_TAG=$(cat .docker_tag)
+          echo "DOCKER_TAG=${DOCKER_TAG}" >> $GITHUB_ENV
+          echo "Docker tag: $DOCKER_TAG"
+
+      - name: Build image and push
+        uses: grafana/shared-workflows/actions/push-to-gar-docker@99afc12c9af11a4a8b89178197787e50b59d07f5 # push-to-gar-docker-v0.3.1
+        with:
+          push: ${{ github.ref_name == 'master' }}
+          tags: |-
+            ${{ env.DOCKER_TAG }}
+            type=raw,value=latest,enable=${{ github.ref_name == 'master' }}
+          image_name: "graphite-mt"
+          context: "."
+          file: "./Dockerfile"
+          environment: "prod"
