@@ -23,6 +23,9 @@ RUN python3.9 -m virtualenv /opt/graphite \
   && find /opt/graphite/webapp ! -perm -a+r -exec chmod a+r {} \; \
   && mkdir -p /opt/graphite/storage /opt/graphite/storage/log/webapp
 
+# Security updates
+RUN /opt/graphite/bin/pip install --upgrade setuptools wheel jaraco.context
+
 FROM ubuntu:focal
 
 ENV DEBIAN_FRONTEND=noninteractive
