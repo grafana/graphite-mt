@@ -1,4 +1,4 @@
-FROM ubuntu:focal AS build
+FROM ubuntu:noble@sha256:cd1dba651b3080c3686ecf4e3c4220f026b521fb76978881737d24f200828b2b AS build
 
 ENV DEBIAN_FRONTEND=noninteractive
 ENV TZ=UTC
@@ -26,7 +26,7 @@ RUN python3.9 -m virtualenv /opt/graphite \
 # Security updates
 RUN /opt/graphite/bin/pip install --upgrade setuptools wheel jaraco.context
 
-FROM ubuntu:focal
+FROM ubuntu:noble@sha256:cd1dba651b3080c3686ecf4e3c4220f026b521fb76978881737d24f200828b2b
 
 ENV DEBIAN_FRONTEND=noninteractive
 ENV TZ=UTC
