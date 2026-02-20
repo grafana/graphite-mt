@@ -28,7 +28,13 @@ jobs:
           echo "DOCKER_TAG=${DOCKER_TAG}" >> $GITHUB_ENV
           echo "Docker tag: $DOCKER_TAG"
 
-      - name: Build image and push
+      - name: Build image
+        run: make build
+
+      - name: Test image
+        run: bash graphite/test.sh
+
+      - name: Push image
         uses: grafana/shared-workflows/actions/push-to-gar-docker@99afc12c9af11a4a8b89178197787e50b59d07f5 # push-to-gar-docker-v0.3.1
         with:
           push: ${{ github.ref_name == 'master' }}

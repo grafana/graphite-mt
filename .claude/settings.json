@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "permissions": {
+    "allow": [
+      "Bash(make build:*)",
+      "Bash(bash graphite/test.sh:*)",
+      "Bash(grype:*)",
+      "Bash(trivy image:*)",
+      "Bash(python3:*)",
+      "Bash(command -v:*)",
+      "Bash(docker:*)",
+      "Bash(IMAGE_NAME=\"us.gcr.io/kubernetes-dev/graphite-mt:*)"
+    ]
+  }
+}
