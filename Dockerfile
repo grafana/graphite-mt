@@ -1,24 +1,22 @@
-FROM ubuntu:focal AS build
+FROM ubuntu:jammy AS build
 
 ENV DEBIAN_FRONTEND=noninteractive
 ENV TZ=UTC
 
-RUN apt-get update && apt-get -y install build-essential libffi-dev libcairo2-dev git wget python3.9 python3.9-dev python3-pip apache2 apache2-dev curl
+RUN apt-get update && apt-get -y install build-essential libffi-dev libcairo2-dev git wget python3.10 python3.10-dev python3-pip apache2 apache2-dev curl
 
-RUN python3.9 -m pip install --upgrade pip
-
-RUN python3.9 -m pip install zipp \
-  && python3.9 -m pip install --upgrade virtualenv virtualenv-tools
+RUN python3.10 -m pip install zipp \
+  && python3.10 -m pip install --upgrade virtualenv virtualenv-tools
 
 WORKDIR /opt/graphite
 COPY .commit_sha .commit_sha
 
-RUN python3.9 -m virtualenv /opt/graphite \
+RUN python3.10 -m virtualenv /opt/graphite \
   && /opt/graphite/bin/pip install https://github.com/graphite-project//graphite-web/tarball/$(cat .commit_sha) \
   && /opt/graphite/bin/pip install pycairo \
   && /opt/graphite/bin/pip install https://github.com/grafana/django-statsd/tarball/master \
   && /opt/graphite/bin/pip install mod_wsgi \
-  && cp -r /opt/graphite/lib/python3.9/site-packages/opt/graphite/webapp/* /opt/graphite/webapp/ \
+  && cp -r /opt/graphite/lib/python3.10/site-packages/opt/graphite/webapp/* /opt/graphite/webapp/ \
   && cp /opt/graphite/conf/graphite.wsgi.example /opt/graphite/conf/graphite.wsgi \
   && find /opt/graphite/webapp ! -perm -a+r -exec chmod a+r {} \; \
   && mkdir -p /opt/graphite/storage /opt/graphite/storage/log/webapp
@@ -26,17 +24,17 @@ RUN python3.9 -m virtualenv /opt/graphite \
 # Security updates
 RUN /opt/graphite/bin/pip install --upgrade setuptools wheel jaraco.context
 
-FROM ubuntu:focal
+FROM ubuntu:jammy
 
 ENV DEBIAN_FRONTEND=noninteractive
 ENV TZ=UTC
 
 RUN apt-get update && \
-    apt-get install -y --only-upgrade libc-bin libc6 && \
-    apt-get -y install python3.9 apache2 curl libcairo2 libffi7 libpython3.9 && \
+    apt-get install -y --only-upgrade libgnutls30 && \
+    apt-get -y install python3.10 apache2 curl libcairo2 libffi8 libpython3.10 tzdata && \
     rm -rf /var/lib/apt/lists/* && \
     # we don't need the snakeoil certs in our setup, and they are flagged as insecure
-    rm -rf /etc/ssl/private/ssl-cert-snakeoil.* 
+    rm -rf /etc/ssl/private/ssl-cert-snakeoil.*
 
 COPY --from=build /opt/graphite /opt/graphite
 COPY run.sh /run.sh
