@@ -35,7 +35,7 @@ jobs:
         run: bash graphite/test.sh
 
       - name: Push image
-        uses: grafana/shared-workflows/actions/push-to-gar-docker@99afc12c9af11a4a8b89178197787e50b59d07f5 # push-to-gar-docker-v0.3.1
+        uses: grafana/shared-workflows/actions/push-to-gar-docker@524cae7d26b8ed09a35a1216e280371726bc5289 # push-to-gar-docker/v0.7.1
         with:
           push: ${{ github.ref_name == 'master' }}
           tags: |-
