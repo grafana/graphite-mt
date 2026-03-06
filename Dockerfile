@@ -22,7 +22,7 @@ RUN python3.10 -m virtualenv /opt/graphite \
   && mkdir -p /opt/graphite/storage /opt/graphite/storage/log/webapp
 
 # Security updates
-RUN /opt/graphite/bin/pip install --upgrade setuptools wheel jaraco.context
+RUN /opt/graphite/bin/pip install --upgrade setuptools wheel jaraco.context django
 
 FROM ubuntu:jammy
 
@@ -30,7 +30,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 ENV TZ=UTC
 
 RUN apt-get update && \
-    apt-get install -y --only-upgrade libgnutls30 && \
+    apt-get install -y --only-upgrade libgnutls30 curl libcurl4 && \
     apt-get -y install python3.10 apache2 curl libcairo2 libffi8 libpython3.10 tzdata && \
     rm -rf /var/lib/apt/lists/* && \
     # we don't need the snakeoil certs in our setup, and they are flagged as insecure
