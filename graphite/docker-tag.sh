@@ -20,10 +20,11 @@ fi
 
 # Grab graphite-project/graphite-web repo
 TMPFILE=$(mktemp -d)
-git clone https://github.com/graphite-project/graphite-web.git $TMPFILE
+git clone https://github.com/npazosmendez/graphite-web.git $TMPFILE
 
 # Jump into the cloned repo
 pushd $TMPFILE
+git checkout origin/njpm/fix-non-negative-delta-none-val
 
 # Grab full and short commit shas
 COMMIT_SHA=$(git rev-parse HEAD | tr -d '\n')
