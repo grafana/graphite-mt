@@ -1,4 +1,4 @@
-FROM ubuntu:jammy AS build
+FROM ubuntu:resolute@sha256:f3d28607ddd78734bb7f71f117f3c6706c666b8b76cbff7c9ff6e5718d46ff64 AS build
 
 ENV DEBIAN_FRONTEND=noninteractive
 ENV TZ=UTC
@@ -24,7 +24,7 @@ RUN python3.10 -m virtualenv /opt/graphite \
 # Security updates
 RUN /opt/graphite/bin/pip install --upgrade setuptools wheel jaraco.context
 
-FROM ubuntu:jammy
+FROM ubuntu:resolute@sha256:f3d28607ddd78734bb7f71f117f3c6706c666b8b76cbff7c9ff6e5718d46ff64
 
 ENV DEBIAN_FRONTEND=noninteractive
 ENV TZ=UTC
