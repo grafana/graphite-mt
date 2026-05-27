@@ -36,13 +36,14 @@ jobs:
         run: bash graphite/test.sh
 
       - name: Push image
-        uses: grafana/shared-workflows/actions/push-to-gar-docker@99afc12c9af11a4a8b89178197787e50b59d07f5 # push-to-gar-docker-v0.3.1
+        uses: grafana/shared-workflows/actions/docker-build-push-image@34f27887c37cafe70d34af57dfc86b468a31b8c4 # docker-build-push-image/v0.3.3
         with:
           push: ${{ github.ref_name == 'master' }}
+          registries: gar
           tags: |-
             ${{ env.DOCKER_TAG }}
             type=raw,value=latest,enable=${{ github.ref_name == 'master' }}
-          image_name: "graphite-mt"
+          gar-image: "graphite-mt"
           context: "."
           file: "./Dockerfile"
-          environment: "prod"
+          gar-environment: "prod"
