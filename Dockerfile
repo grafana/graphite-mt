@@ -30,7 +30,10 @@ ENV DEBIAN_FRONTEND=noninteractive
 ENV TZ=UTC
 
 RUN apt-get update && \
-    apt-get install -y --only-upgrade libgnutls30 && \
+    apt-get install -y --only-upgrade libgnutls30 gzip tar \
+      libgssapi-krb5-2 libk5crypto3 libkrb5-3 libkrb5support0 \
+      libncurses6 libncursesw6 libtinfo6 ncurses-base ncurses-bin \
+      libpam-modules libpam-modules-bin libpam-runtime libpam0g && \
     apt-get -y install python3.10 apache2 curl libcairo2 libffi8 libpython3.10 tzdata && \
     rm -rf /var/lib/apt/lists/* && \
     # we don't need the snakeoil certs in our setup, and they are flagged as insecure
