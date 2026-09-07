@@ -24,17 +24,16 @@ RUN python3.10 -m virtualenv /opt/graphite \
 # Security updates
 RUN /opt/graphite/bin/pip install --upgrade setuptools wheel jaraco.context
 
+RUN /opt/graphite/bin/pip uninstall --yes pip
+
 FROM ubuntu:jammy@sha256:2edbbc5dc405e9612ba3584ce95480277e3eb374407b5505fe26f17df77c7dbc
 
 ENV DEBIAN_FRONTEND=noninteractive
 ENV TZ=UTC
 
 RUN apt-get update && \
-    apt-get install -y --only-upgrade libgnutls30 gzip tar \
-      libgssapi-krb5-2 libk5crypto3 libkrb5-3 libkrb5support0 \
-      libncurses6 libncursesw6 libtinfo6 ncurses-base ncurses-bin \
-      libpam-modules libpam-modules-bin libpam-runtime libpam0g && \
-    apt-get -y install python3.10 apache2 curl libcairo2 libffi8 libpython3.10 tzdata && \
+    apt-get -y upgrade && \
+    apt-get -y install python3.10 apache2 libcairo2 libffi8 libpython3.10 tzdata && \
     rm -rf /var/lib/apt/lists/* && \
     # we don't need the snakeoil certs in our setup, and they are flagged as insecure
     rm -rf /etc/ssl/private/ssl-cert-snakeoil.*
