@@ -42,7 +42,6 @@ jobs:
           registries: gar
           tags: |-
             ${{ env.DOCKER_TAG }}
-            type=raw,value=latest,enable=${{ github.ref_name == 'master' }}
           gar-image: "graphite-mt"
           context: "."
           file: "./Dockerfile"
