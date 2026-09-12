@@ -1,4 +1,4 @@
-FROM ubuntu:jammy@sha256:2edbbc5dc405e9612ba3584ce95480277e3eb374407b5505fe26f17df77c7dbc AS build
+FROM ubuntu:jammy@sha256:829f6df217bcbae2b371026e81711d1a787c61b2967ad09d015063663ebafbf7 AS build
 
 ENV DEBIAN_FRONTEND=noninteractive
 ENV TZ=UTC
@@ -26,7 +26,7 @@ RUN /opt/graphite/bin/pip install --upgrade setuptools wheel jaraco.context
 
 RUN /opt/graphite/bin/pip uninstall --yes pip
 
-FROM ubuntu:jammy@sha256:2edbbc5dc405e9612ba3584ce95480277e3eb374407b5505fe26f17df77c7dbc
+FROM ubuntu:jammy@sha256:829f6df217bcbae2b371026e81711d1a787c61b2967ad09d015063663ebafbf7
 
 ENV DEBIAN_FRONTEND=noninteractive
 ENV TZ=UTC
