@@ -1,22 +1,30 @@
-FROM ubuntu:jammy@sha256:b8b6ee6aa931ecd9d0d952abc34dc0e5f7c6a30c6bb71b079fe399fde0329c02 AS build
+FROM ubuntu:26.04@sha256:f144425ff09be612d6d9ad965196e9cdc23dae1f42110a8a11a3e9a8198759f7 AS build
 
 ENV DEBIAN_FRONTEND=noninteractive
 ENV TZ=UTC
 
-RUN apt-get update && apt-get -y install build-essential libffi-dev libcairo2-dev git wget python3.10 python3.10-dev python3-pip apache2 apache2-dev curl
-
-RUN python3.10 -m pip install zipp \
-  && python3.10 -m pip install --upgrade virtualenv virtualenv-tools
+RUN apt-get update && apt-get -y install \
+    build-essential \
+    libffi-dev \
+    libcairo2-dev \
+    git \
+    wget \
+    python3 \
+    python3-dev \
+    python3-venv \
+    apache2 \
+    apache2-dev \
+    curl
 
 WORKDIR /opt/graphite
 COPY .commit_sha .commit_sha
 
-RUN python3.10 -m virtualenv /opt/graphite \
+RUN python3 -m venv /opt/graphite \
   && /opt/graphite/bin/pip install https://github.com/graphite-project//graphite-web/tarball/$(cat .commit_sha) \
   && /opt/graphite/bin/pip install pycairo \
   && /opt/graphite/bin/pip install https://github.com/grafana/django-statsd/tarball/master \
   && /opt/graphite/bin/pip install mod_wsgi \
-  && cp -r /opt/graphite/lib/python3.10/site-packages/opt/graphite/webapp/* /opt/graphite/webapp/ \
+  && cp -r /opt/graphite/lib/python3.14/site-packages/opt/graphite/webapp/* /opt/graphite/webapp/ \
   && cp /opt/graphite/conf/graphite.wsgi.example /opt/graphite/conf/graphite.wsgi \
   && find /opt/graphite/webapp ! -perm -a+r -exec chmod a+r {} \; \
   && mkdir -p /opt/graphite/storage /opt/graphite/storage/log/webapp
@@ -26,15 +34,17 @@ RUN /opt/graphite/bin/pip install --upgrade setuptools wheel jaraco.context
 
 RUN /opt/graphite/bin/pip uninstall --yes pip
 
-FROM ubuntu:jammy@sha256:b8b6ee6aa931ecd9d0d952abc34dc0e5f7c6a30c6bb71b079fe399fde0329c02
+FROM ubuntu:26.04@sha256:f144425ff09be612d6d9ad965196e9cdc23dae1f42110a8a11a3e9a8198759f7
 
 ENV DEBIAN_FRONTEND=noninteractive
 ENV TZ=UTC
 
 RUN apt-get update && \
     apt-get -y upgrade && \
-    apt-get -y install python3.10 apache2 libcairo2 libffi8 libpython3.10 tzdata && \
+    apt-get -y install python3 apache2 libcairo2 libffi8 libpython3.14 tzdata fontconfig && \
     rm -rf /var/lib/apt/lists/* && \
+    # cairo runs as www-data, which cannot write a fontconfig cache; without a prebuilt one every render logs an error
+    fc-cache -f && \
     # we don't need the snakeoil certs in our setup, and they are flagged as insecure
     rm -rf /etc/ssl/private/ssl-cert-snakeoil.*
 
