@@ -7,16 +7,11 @@ set -eufo pipefail
 #
 # By default, this script grabs the full commit sha of the HEAD of master of the
 # graphite-project/graphite-web repo. That value is dropped into `.commit_sha`. It then
-# generates a docker tag from that full commit sha and drops that value into
-# `.docker_tag`.
+# generates a docker tag from this repo's commit time and both commit shas and
+# drops that value into `.docker_tag`.
 
 # Check dependencies
 command -v git >/dev/null 2>&1 || { echo "git is not installed"; exit 1; }
-if [[ ${OSTYPE:-notdarwin} == "darwin"* ]]; then
-  command -v gdate >/dev/null 2>&1 || { echo "gdate is not installed"; exit 1; }
-else
-  command -v date >/dev/null 2>&1 || { echo "date is not installed"; exit 1; }
-fi
 
 # Grab graphite-project/graphite-web repo
 TMPFILE=$(mktemp -d)
@@ -29,14 +24,6 @@ pushd $TMPFILE
 COMMIT_SHA=$(git rev-parse HEAD | tr -d '\n')
 GRAPHITE_WEB_COMMIT_SHORT="$(git rev-parse --short "$COMMIT_SHA")"
 
-# Grab timestamp of commit
-UNIX_TIMESTAMP=$(git show -s --format=%ct "$COMMIT_SHA")
-if [[ ${OSTYPE:-notdarwin} == "darwin"* ]]; then
-  ISO_TIMESTAMP=$(gdate -u --rfc-3339=seconds "-d@${UNIX_TIMESTAMP}" | sed "s/+.*$//g" | sed "s/[^0-9]*//g")
-else
-  ISO_TIMESTAMP=$(date -u --rfc-3339=seconds "-d@${UNIX_TIMESTAMP}" | sed "s/+.*$//g" | sed "s/[^0-9]*//g")
-fi
-
 # Jump back out
 popd
 
@@ -46,8 +33,10 @@ GRAPHITE_MT_BRANCH=$(git branch --show-current)
 GRAPHITE_MT_SHORT="$(git rev-parse --short "$GRAPHITE_MT_SHA")"
 
 WORKING_SUFFIX=$(if [ -n "$(git status --porcelain --untracked-files=no)" ]; then echo "-WIP"; else echo ""; fi)
+# Commit time of this repo comes first so newer images sort after older ones
+GRAPHITE_MT_TIMESTAMP=$(TZ=UTC git show -s --date=format-local:%Y%m%d%H%M%S --format=%cd "$GRAPHITE_MT_SHA")
 # Generate docker tag with both SHAs
-DOCKER_TAG=$(echo "${ISO_TIMESTAMP}-${GRAPHITE_WEB_COMMIT_SHORT}-${GRAPHITE_MT_BRANCH}-${GRAPHITE_MT_SHORT}${WORKING_SUFFIX}" | tr "/" "_")
+DOCKER_TAG=$(echo "${GRAPHITE_MT_TIMESTAMP}-${GRAPHITE_WEB_COMMIT_SHORT}-${GRAPHITE_MT_BRANCH}-${GRAPHITE_MT_SHORT}${WORKING_SUFFIX}" | tr "/" "_")
 
 # Generate output files
 echo $COMMIT_SHA > .commit_sha
