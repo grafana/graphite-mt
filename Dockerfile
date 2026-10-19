@@ -46,7 +46,9 @@ RUN apt-get update && \
     # cairo runs as www-data, which cannot write a fontconfig cache; without a prebuilt one every render logs an error
     fc-cache -f && \
     # we don't need the snakeoil certs in our setup, and they are flagged as insecure
-    rm -rf /etc/ssl/private/ssl-cert-snakeoil.*
+    rm -rf /etc/ssl/private/ssl-cert-snakeoil.* && \
+    # pebble ships in the base image but is unused
+    rm -f /usr/bin/pebble
 
 COPY --from=build /opt/graphite /opt/graphite
 COPY run.sh /run.sh
